@@ -116,10 +116,8 @@ class GoogleAsyncDataReqestCrawling(BasicAsyncNewsDataCrawling):
         res_data = await self.fetch_page_urls()
         if res_data:
             start = parsing.div_start(html=res_data)
-
             data = [self.extract_format(parsing, i) for i in start]
             self._logging(logging.INFO, f"{self.home}에서 --> {len(data)}개 의 뉴스 수집")
-
             return data
 
 
@@ -167,10 +165,13 @@ class NaverDaumAsyncDataCrawling(BasicAsyncNewsDataCrawling):
         self._logging(logging.INFO, f"{self.home} 시작합니다")
         res_data = await self.fetch_page_urls()
 
-        data = [self.extract_format(item=item, **kwargs) for item in res_data[element]]
-        s = await asyncio.gather(*data)
-        self._logging(logging.INFO, f"{self.home}에서 --> {len(s)}개 의 뉴스 수집")
-        return s
+        try:
+            data = [self.extract_format(item=item, **kwargs) for item in res_data[element]]
+            s = await asyncio.gather(*data)
+            self._logging(logging.INFO, f"{self.home}에서 --> {len(s)}개 의 뉴스 수집")
+            return s
+        except KeyError as error:
+            print(error)
 
 
 

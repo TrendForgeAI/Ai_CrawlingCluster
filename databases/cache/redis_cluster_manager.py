@@ -24,7 +24,7 @@ class RedisClusterManager:
     Redis 클러스터를 동기식으로 관리하는 클래스
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Redis 클러스터 클라이언트 초기화
         """

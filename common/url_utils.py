@@ -4,6 +4,7 @@ import pytz
 from datetime import datetime, timedelta
 from dateutil import parser
 from pydantic import BaseModel
+from newspaper import Article
 
 import re
 from bs4 import BeautifulSoup
@@ -117,6 +118,29 @@ def parse_time_ago(time_str: str) -> str:
             return date_obj.strftime("%Y-%m-%d")
     except Exception as error:
         return None
+
+
+def extract_article_data(url: str) -> str:
+    """
+    URL에서 기사 데이터를 추출합니다.
+    
+    Args:
+        url (str): 대상 웹 페이지의 URL
+    
+    Returns:
+        str: 본문 반환
+    """
+    try:
+        # Article 객체 생성
+        article = Article(url)
+        article.download()  # 페이지 다운로드
+        article.parse()     # HTML 파싱
+
+        return article.text
+
+    except Exception as e:
+        print(f"❌ Error extracting data from {url}: {e}")
+        return {}
 
 
 class NewsDataFormat(BaseModel):
