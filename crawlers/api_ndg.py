@@ -1,17 +1,15 @@
 """
-========================================================================================= test session starts =========================================================================================
-
-platform darwin -- Python 3.12.6, pytest-8.3.3, pluggy-1.5.0
-rootdir: /Users/imhaneul/Documents/project/JuJuClub/CrawlingCluster
+============================================================================================================ test session starts ============================================================================================================
+platform darwin -- Python 3.12.7, pytest-8.3.4, pluggy-1.5.0
+rootdir: /Users/imhaneul/Documents/project/TrendAI/Ai_CrawlingCluster
 configfile: pyproject.toml
-plugins: asyncio-0.24.0, anyio-4.6.0, Faker-28.4.1
-asyncio: mode=Mode.STRICT, default_loop_scope=function
-collected 3 items                                                                                                                                                                                     
+plugins: Faker-33.1.0, asyncio-0.25.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=function
+collected 3 items                                                                                                                                                                                                                           
 
-test_api_req.py ...                                                                                                                                                                            
+test_crawlers.py ...                                                                                                                                                                                                                  [100%]
 
-[100%]
-========================================================================================= 3 passed in 10.06s ==========================================================================================
+============================================================================================================= 3 passed in 6.90s =============================================================================================================
 """
 
 from common.types import UrlDictCollect

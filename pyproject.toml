@@ -28,14 +28,22 @@ selenium-stealth = "^1.0.6"
 undetected-chromedriver = "^3.5.5"
 webdriver-manager = "^4.0.2"
 newspaper3k = "^0.2.8"
-lxml = {extras = ["html-clean"], version = "^5.3.0"}
+lxml = "^5.3.0"
 fake-useragent = "^2.0.3"
 faker = "^33.1.0"
 matplotlib = "^3.10.0"
 redis = "^5.2.1"
 aioredis = "^2.0.1"
+pytest-asyncio = "^0.25.0"
+pytest = "^8.3.4"
+beautifulsoup4 = "^4.12.3"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+
