@@ -1,6 +1,3 @@
-import redis
-
-
 world_keywords: list[str] = [
     'AI', 'LLM', 'GPT', 'Deep Learning', 'Machine Learning', 
     'Neural Networks', 'Natural Language Processing', 
@@ -20,16 +17,3 @@ korea_keywords: list[str] = [
     "다중모달 AI", "생성형 AI 윤리", "AI 트렌드 2024", "인공지능 연구"
 ]
 
-
-redis_client = redis.StrictRedis(host="localhost", port=6379, db=0, decode_responses=True)
-def store_keywords_to_redis(key: str, keywords: list[str]) -> None:
-    """
-    Args:
-        key(str): Redis 키 이름 
-        keywords(list): 저장할 키워드 리스트
-    """    
-    redis_client.delete(key)
-    redis_client.rpush(key, *keywords)
-    
-store_keywords_to_redis("keywords:global", world_keywords)
-store_keywords_to_redis("keywords:korea", korea_keywords)

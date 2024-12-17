@@ -1,10 +1,17 @@
+"""1회성 스크립트 이긴한데 재사용 가능성 있음"""
+
 import yaml
 import json
-from pathlib import Path
+from typing import TypedDict, Required
 from itertools import product
 from databases.cache.redis_cluster_manager import RedisClusterManager
-from databases.keyword_redis import world_keywords, korea_keywords
+from databases.keyword import world_keywords, korea_keywords
 
+
+class KeyWords(TypedDict):
+    korea_combi: Required[list[set]]
+    world_combi: Required[list[set]]
+    mixin_combi: Required[list[set]]
 
 # YAML 설정 로드
 def load_config(file_path: str) -> dict:
@@ -19,20 +26,19 @@ def load_config(file_path: str) -> dict:
 
 
 # 데이터 조합 생성
-def generate_combinations() -> dict:
+def generate_combinations() -> KeyWords:
     """ 키워드 조합 데이터를 생성합니다.
     Returns:
         dict: 생성된 키워드 조합
     """
-    return {
-        "korea_combi": list(set(product(korea_keywords, korea_keywords))),
-        "world_combi": list(set(product(world_keywords, world_keywords))),
-        "mixin_combi": list(set(product(korea_keywords, world_keywords))),
-    }
-
+    return KeyWords(
+        korea_combi=list(set(product(korea_keywords, korea_keywords))),
+        world_combi=list(set(product(korea_keywords, korea_keywords))),
+        mixin_combi=list(set(product(korea_keywords, korea_keywords))),
+    )
 
 # 데이터 저장 함수
-def store_combinations(manager: RedisClusterManager, combinations: dict):
+def store_combinations(manager: RedisClusterManager, combinations: dict) -> None:
     """ Redis 클러스터에 조합 데이터를 저장합니다.
     Args:
         manager (RedisClusterManager): Redis 클러스터 관리자 인스턴스
@@ -53,11 +59,9 @@ def store_combinations(manager: RedisClusterManager, combinations: dict):
 
 
 # 메인 실행 함수
-def cluster_main():
+def cluster_main() -> None:
     """ Redis 클러스터에 데이터를 저장하는 메인 함수 """
     # 설정 로드 및 관리자 생성
-    cluster_location = Path(__file__).parent
-    config = load_config(f"{cluster_location}/configs/cy/database.yaml")
     manager = RedisClusterManager()
 
     # 데이터 조합 생성 및 저장
