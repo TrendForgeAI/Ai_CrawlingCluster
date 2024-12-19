@@ -10,13 +10,14 @@ from redis.cluster import ClusterNode
 logging.basicConfig(
     filename="redis_cluster.log",
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
+    format="%(asctime)s [%(levelname)s] %(message)s",
 )
 
 # YAML 설정 파일 로드
 CONFIG_PATH = Path(__file__).parent.parent.parent / "configs/cy/database.yaml"
 with open(CONFIG_PATH, "r") as file:
     config: List[dict] = yaml.safe_load(file)
+
 
 # Redis 클러스터 관리자
 class RedisClusterManager:
@@ -30,12 +31,18 @@ class RedisClusterManager:
         """
         # Redis 클러스터 노드 설정
         self.startup_nodes: list[ClusterNode] = [
-            ClusterNode(host=node["host"], port=node["port"]) 
+            ClusterNode(host=node["host"], port=node["port"])
             for node in config["redis_clusters"]
         ]
-        self.cluster_client = redis.RedisCluster(startup_nodes=self.startup_nodes, decode_responses=True)
-        self.node_clients = {node["host"]: redis.StrictRedis(host=node["host"], port=node["port"], decode_responses=True)
-                             for node in config["redis_clusters"]}
+        self.cluster_client = redis.RedisCluster(
+            startup_nodes=self.startup_nodes, decode_responses=True
+        )
+        self.node_clients = {
+            node["host"]: redis.StrictRedis(
+                host=node["host"], port=node["port"], decode_responses=True
+            )
+            for node in config["redis_clusters"]
+        }
         print("🚀 Redis 클러스터 모드 활성화")
 
     def store_data(self, key: str, value: Union[str, dict], port: int | None = None):
@@ -47,21 +54,21 @@ class RedisClusterManager:
             port (Optional[int]): 특정 노드의 포트 번호 (None이면 자동 분산)
         """
         try:
-            serialized_value = json.dumps(value) if isinstance(value, dict) else value
+            serial_value: str = json.dumps(value) if isinstance(value, dict) else value
 
             if port:
                 # 특정 노드에 저장
                 if port not in self.node_clients:
-                    raise ValueError(f"❌ 지정된 포트 {port}에 해당하는 노드가 없습니다.")
+                    raise ValueError(
+                        f"❌ 지정된 포트 {port}에 해당하는 노드가 없습니다."
+                    )
                 client = self.node_clients[port]
-                client.set(key, serialized_value)
+                client.set(key, serial_value)
                 logging.info(f"✅ {key} → {port}번 노드에 저장됨.")
-                print(f"✅ '{key}' → {port}번 노드에 저장됨.")
             else:
                 # 클러스터 자동 분산 저장
-                self.cluster_client.set(key, serialized_value)
+                self.cluster_client.set(key, serial_value)
                 logging.info(f"✅ {key} → Redis 클러스터에 자동 저장됨.")
-                print(f"✅ '{key}' → Redis 클러스터에 자동 저장됨.")
 
         except Exception as e:
             logging.error(f"❌ 데이터 저장 실패 (키: {key}, 포트: {port}): {e}")
@@ -77,24 +84,26 @@ class RedisClusterManager:
             Union[str, dict, None]: 조회된 값
         """
         try:
-            if port:
-                # 특정 노드에서 데이터 조회
-                if port not in self.node_clients:
-                    raise ValueError(f"❌ 지정된 포트 {port}에 해당하는 노드가 없습니다.")
-                client = self.node_clients[port]
-                value = client.get(key)
-            else:
-                # 클러스터 자동 조회
-                value = self.cluster_client.get(key)
+            if self.cluster_client.cluster_nodes():
+                if port:
+                    # 특정 노드에서 데이터 조회
+                    if port not in self.node_clients:
+                        raise ValueError(
+                            f"❌ 지정된 포트 {port}에 해당하는 노드가 없습니다."
+                        )
+                    client = self.node_clients[port]
+                    value = client.get(key)
+                else:
+                    # 클러스터 자동 조회
+                    value = self.cluster_client.get(key)
 
-            if value:
-                try:
-                    return json.loads(value)
-                except json.JSONDecodeError:
-                    return value
-            return None
+                if value:
+                    try:
+                        return json.loads(value)
+                    except json.JSONDecodeError:
+                        return value
+                return None
         except Exception as e:
             logging.error(f"❌ 데이터 조회 실패 (키: {key}, 포트: {port}): {e}")
             print(f"❌ 데이터 조회 실패: {e}")
             return None
-

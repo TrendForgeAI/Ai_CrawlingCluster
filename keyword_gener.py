@@ -22,7 +22,7 @@ def save_redis_keyword(country_code: str) -> None:
     """
     c: list[str] = list(generate_korea_questions(country_code))
     manager = RedisClusterManager()
-    manager.store_data("KR:question", value=json.dumps(c, ensure_ascii=False))
+    manager.store_data("KR:question", value=json.dumps(c))
 
 
 save_redis_keyword("KR")

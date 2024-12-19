@@ -6,9 +6,9 @@ from itertools import chain
 from bs4 import BeautifulSoup
 from common.types import SelectJson, SelectHtml, UrlDictCollect
 from common.async_http_client import (
-    AsyncRequestJSON, 
-    AsyncRequestHTML, 
-    BasicAsyncNewsDataCrawling
+    AsyncRequestJSON,
+    AsyncRequestHTML,
+    BasicAsyncNewsDataCrawling,
 )
 from common.url_utils import (
     href_from_text_preprocessing,
@@ -17,11 +17,7 @@ from common.url_utils import (
     time_extract,
     NewsDataFormat,
 )
-from crawlers import (
-    DaumSeleniumNews,
-    GoogleReqestNews,
-    GooglSeleniumeNews
-)
+from crawlers import DaumSeleniumNews, GoogleReqestNews, GooglSeleniumeNews
 
 
 def data_format_create(
@@ -154,6 +150,7 @@ class NaverDaumAsyncDataCrawling(BasicAsyncNewsDataCrawling):
             time_ago=item[datetime_key],
         )
 
+    # fmt: off
     async def extract_news_urls(self, element: str, **kwargs) -> UrlDictCollect:
         """뉴스 URL을 추출합니다.
         Args:
@@ -171,8 +168,7 @@ class NaverDaumAsyncDataCrawling(BasicAsyncNewsDataCrawling):
             self._logging(logging.INFO, f"{self.home}에서 --> {len(s)}개 의 뉴스 수집")
             return s
         except KeyError as error:
-            print(error)
-
+            pass
 
 
 # Daum Selenium
