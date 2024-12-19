@@ -3,13 +3,17 @@ countries:
     core_keywords:
       - "인공지능"
       - "생성형 인공지능"
-      - "자연어 처리"
       - "딥러닝"
       - "초거대 AI"
       - "지피티"
       - Ai 
       - LLM
+      - llm
+      - ai
       - 강화학습
+      - 멀티모달 AI 
+      - 설명 가능한 인공지능
+      - Ai 트렌드 
     context_keywords:
       - "의료"
       - "금융"
@@ -24,23 +28,24 @@ countries:
       - "최근 {} 기술의 {} 적용 사례는?"
       - "{}와 관련된 최신 트렌드는 무엇인가?"
       - "{} 산업에서 {}의 활용 가능성은?"
-  US:
-    core_keywords:
-      - "AI"
-      - "LLM"
-      - "GPT"
-      - "Deep Learning"
-      - "Machine Learning"
-      - "Foundation Models"
-    context_keywords:
-      - "Healthcare"
-      - "Finance"
-      - "Education"
-      - "Manufacturing"
-      - "Autonomous Driving"
-      - "Logistics"
-    templates:
-      - "What is the impact of {} technology on the {} industry?"
-      - "What are recent applications of {} technology in {}?"
-      - "What are the latest trends related to {} in {}?"
-      - "How can {} be utilized in the {} industry?"
+
+  # US:
+  #   core_keywords:
+  #     - "AI"
+  #     - "LLM"
+  #     - "GPT"
+  #     - "Deep Learning"
+  #     - "Machine Learning"
+  #     - "Foundation Models"
+  #   context_keywords:
+  #     - "Healthcare"
+  #     - "Finance"
+  #     - "Education"
+  #     - "Manufacturing"
+  #     - "Autonomous Driving"
+  #     - "Logistics"
+  #   templates:
+  #     - "What is the impact of {} technology on the {} industry?"
+  #     - "What are recent applications of {} technology in {}?"
+  #     - "What are the latest trends related to {} in {}?"
+  #     - "How can {} be utilized in the {} industry?"
