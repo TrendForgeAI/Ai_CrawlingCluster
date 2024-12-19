@@ -2,11 +2,19 @@ from pathlib import Path
 import itertools
 import yaml
 
+
 class BaseCountry:
     """
     국가별 키워드 및 템플릿 데이터를 관리하는 클래스.
     """
-    def __init__(self, name: str, core_keywords: list[str], context_keywords: list[str], templates: list[str]):
+
+    def __init__(
+        self,
+        name: str,
+        core_keywords: list[str],
+        context_keywords: list[str],
+        templates: list[str],
+    ):
         self.name = name
         self.core_keywords = core_keywords
         self.context_keywords = context_keywords
@@ -18,15 +26,16 @@ class BaseCountry:
         """
         return list(itertools.product(self.core_keywords, self.context_keywords))
 
-    def apply_question_templates(self, queries: list[tuple[str, str]]) -> list[str]:
+    def apply_question_templates(self, queries: list[tuple[str, str]]) -> set[str]:
         """
         질문 템플릿 적용
         """
         questions = []
         for template in self.templates:
-            questions.extend([template.format(core, context) for core, context in queries])
-        return questions
-
+            questions.extend(
+                [template.format(core, context) for core, context in queries]
+            )
+        return set(questions)
 
 
 def load_countries_from_yaml() -> dict[str, BaseCountry]:
@@ -40,13 +49,14 @@ def load_countries_from_yaml() -> dict[str, BaseCountry]:
     keyword_yaml_path = Path(__file__).parent.parent / "configs/cy/keyword.yaml"
     with open(keyword_yaml_path, "r", encoding="utf-8") as file:
         data = yaml.safe_load(file)
-    
-    countries = {}
-    for country_code, country_data in data["countries"].items():
-        countries[country_code] = BaseCountry(
+
+    countries = {
+        country_code: BaseCountry(
             name=country_code,
             core_keywords=country_data["core_keywords"],
             context_keywords=country_data["context_keywords"],
-            templates=country_data["templates"]
+            templates=country_data["templates"],
         )
+        for country_code, country_data in data["countries"].items()
+    }
     return countries
