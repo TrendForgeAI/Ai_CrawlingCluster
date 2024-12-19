@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import TypedDict
 from dataclasses import dataclass
 import itertools
 import yaml

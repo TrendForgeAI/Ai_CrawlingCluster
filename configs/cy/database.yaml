@@ -13,3 +13,8 @@ redis_clusters:
     host: 127.0.0.1
     port: 7002
     role: backup
+
+
+mongo_db:
+  - id: mongo1
+    host: "mongodb://localhost:27017"
