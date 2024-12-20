@@ -20,3 +20,4 @@ daum_auth: str = parser.get("daum", "Authorization")
 
 
 mongo_uri: str = parser.get("Mongo", "uri")
+WITH_TIME = 5

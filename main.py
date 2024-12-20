@@ -23,8 +23,9 @@ async def crawling_data(target: str, count: int) -> list[UrlDictCollect]:
         """크롤링 및 데이터 출력 함수 정의"""
         driver = driver_class(target, count)
         data: UrlDictCollect = await driver.news_collector()
+        
         # 클래스명에서 'Async'와 'NewsParsingDriver' 제거하여 사이트명 추출
-        site_name = driver_class.__name__.replace('Async', '').replace('NewsParsingDriver', '').lower()
+        site_name: str = driver_class.__name__.replace('Async', '').replace('NewsParsingDriver', '').lower()
         return site_name, data
     
     tasks = [
@@ -37,8 +38,8 @@ async def crawling_data(target: str, count: int) -> list[UrlDictCollect]:
 
 async def start():
     keyword = redis_data_array()
-    return await crawling_data(keyword, 1)
-
+    data = await crawling_data(keyword, 1)
+    return data
 
 
 if __name__ == "__main__":

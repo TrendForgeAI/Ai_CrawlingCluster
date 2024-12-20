@@ -1,20 +1,19 @@
-countries:
-  KR:
-    core_keywords:
+keywords:
+  core_keywords:
       - "인공지능"
       - "생성형 인공지능"
       - "딥러닝"
       - "초거대 AI"
       - "지피티"
+      - GPT
+      - gpt
       - Ai 
       - LLM
-      - llm
-      - ai
       - 강화학습
       - 멀티모달 AI 
       - 설명 가능한 인공지능
       - Ai 트렌드 
-    context_keywords:
+  context_keywords:
       - "의료"
       - "금융"
       - "교육"
@@ -23,37 +22,17 @@ countries:
       - "헬스케어"
       - "자율주행"
       - "물류"
-    templates:
-      - "{} 기술이 {} 산업에 미치는 영향은?"
-      - "최근 {} 기술의 {} 적용 사례는?"
-      - "{}와 관련된 최신 트렌드는 무엇인가?"
-      - "{} 산업에서 {}의 활용 가능성은?"
-      - "{} 기술이 {} 산업에 가져온 주요 변화는 무엇인가?"
-      - "{}가 {} 산업에 혁신을 일으킨 대표 사례는?"
-      - "최근 {} 기술이 {}에서 해결한 문제는 무엇인가?"
-      - "{}와 {} 산업 간의 융합이 예상되는 미래 모습은?"
-      - "{} 기술과 관련된 시장 트렌드는 무엇인가?"
-      - "{} 기술이 {}의 기존 프로세스를 어떻게 개선할 수 있는가?"
-      - "{} 기술의 현재 한계와 이를 극복하기 위한 전략은?"
-      - "{} 기술이 {} 산업 내 직업 구조에 미치는 영향은?"
+  templates:
+    - "{} 기술이 {} 산업에 미치는 영향은?"
+    - "최근 {} 기술의 {} 적용 사례는?"
+    - "{}와 관련된 최신 트렌드는 무엇인가?"
+    - "{} 산업에서 {}의 활용 가능성은?"
+    - "{} 기술이 {} 산업에 가져온 주요 변화는 무엇인가?"
+    - "{}가 {} 산업에 혁신을 일으킨 대표 사례는?"
+    - "최근 {} 기술이 {}에서 해결한 문제는 무엇인가?"
+    - "{}와 {} 산업 간의 융합이 예상되는 미래 모습은?"
+    - "{} 기술과 관련된 시장 트렌드는 무엇인가?"
+    - "{} 기술이 {}의 기존 프로세스를 어떻게 개선할 수 있는가?"
+    - "{} 기술의 현재 한계와 이를 극복하기 위한 전략은?"
+    - "{} 기술이 {} 산업 내 직업 구조에 미치는 영향은?"
 
-  # US:
-  #   core_keywords:
-  #     - "AI"
-  #     - "LLM"
-  #     - "GPT"
-  #     - "Deep Learning"
-  #     - "Machine Learning"
-  #     - "Foundation Models"
-  #   context_keywords:
-  #     - "Healthcare"
-  #     - "Finance"
-  #     - "Education"
-  #     - "Manufacturing"
-  #     - "Autonomous Driving"
-  #     - "Logistics"
-  #   templates:
-  #     - "What is the impact of {} technology on the {} industry?"
-  #     - "What are recent applications of {} technology in {}?"
-  #     - "What are the latest trends related to {} in {}?"
-  #     - "How can {} be utilized in the {} industry?"
